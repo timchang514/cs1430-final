@@ -4,7 +4,6 @@ import chess.svg
 def parse_board(board):
     # TODO: Parse board data into board object
 
-
     return new_board(), None
 
 def empty_board():

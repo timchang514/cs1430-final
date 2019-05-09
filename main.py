@@ -1,5 +1,6 @@
 from get_board import get_board
 from render_board import *
+from parse_board import *
 from tkinter import Tk
 from threading import Thread, Lock
 from gui import *

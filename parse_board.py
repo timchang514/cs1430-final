@@ -1,5 +1,11 @@
 from skimage import color, feature, transform, io, img_as_float
-import matplotlib.pyplot as plt
+
+# Fix crash on OSX
+# import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib import pyplot as pet
+
 import numpy as np
 import scipy
 import cv2
@@ -45,7 +51,7 @@ def find_corners(img):
 
     # find where the horizontal and vertical lines intersect
     intersections = find_intersections(horizontal, vertical)
-    
+
     # run agglomerative clustering in case we detected some bad lines
     thresh = 5
     dists = scipy.spatial.distance.pdist(intersections)
