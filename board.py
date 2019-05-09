@@ -1,6 +1,7 @@
 from enum import Enum
 
 class PieceName(Enum):
+    EMPTY = 1
     ROOK = 1
     KNIGHT = 2
     BISHOP = 3

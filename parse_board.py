@@ -4,7 +4,7 @@ from skimage import color, feature, transform, io, img_as_float
 # import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
-from matplotlib import pyplot as pet
+from matplotlib import pyplot as plt
 
 import numpy as np
 import scipy
@@ -19,7 +19,11 @@ def get_board_squares(img, corners):
 
     # four point transform to crop the board image to get just the playing area
     M = cv2.getPerspectiveTransform(corners, new_corners)
-    warped = cv2.warpPerspective(im, M, (1816, 1816))
+    warped = cv2.warpPerspective(img, M, (1816, 1816))
+    # plt.imshow(img)
+    # plt.scatter(corners[:,0], corners[:, 1], c="r")
+    # plt.show()
+
 
     # divide the cropped image to get the individual squares of the board
     squares = divide_board(warped, int(1816/8))
@@ -29,11 +33,12 @@ def get_board_squares(img, corners):
 # takes in an image of a board (taken from video feed of the game) and finds the corners
 # of the playing area
 def find_corners(img):
-    img = cv2.resize(img, (313, 418))
+    # img = cv2.resize(img, (313, 418))
+    # img = cv2.resize(img, (720, 1280))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # get the edges of the image
-    edges = detect_edges
+    edges = detect_edges(img)
 
     # get the lines of the board
     lines = cv2.HoughLines(edges, 1, np.pi/180, 90)
@@ -71,10 +76,12 @@ def find_corners(img):
         centers.append(center)
 
     centers = np.array(centers)
-
+    # plt.imshow(img)
+    # plt.scatter(centers[:,0], centers[:,1], c="r")
+    # plt.show()
     # once we have the clustered intersection points, find the corners of the playing area
     # return these corners
-    corners = get_playing_area_corners(im, centers)
+    corners = get_playing_area_corners(img, centers)
 
     return corners
 
