@@ -24,7 +24,6 @@ def get_board_squares(img, corners):
     # plt.scatter(corners[:,0], corners[:, 1], c="r")
     # plt.show()
 
-
     # divide the cropped image to get the individual squares of the board
     squares = divide_board(warped, int(1816/8))
 

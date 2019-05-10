@@ -1,10 +1,13 @@
 import chess
 import chess.svg
 
-def parse_board(board):
-    # TODO: Parse board data into board object
+def parse_board(pieces):
+    board = chess.Board()
+    board.set_piece_map(pieces)
 
-    return new_board(), None
+    # No feature for this in the api - somehow detect difference between two boards to calculate move?
+
+    return chess.svg.board(board=board), None
 
 def empty_board():
     board = chess.Board("8/8/8/8/8/8/8/8")
