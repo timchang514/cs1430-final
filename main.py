@@ -16,7 +16,7 @@ def gui_loop():
     my_gui = ChessGUI(root, mt_board)
 
     cv2.namedWindow("preview")
-    vc = cv2.VideoCapture(0)
+    vc = cv2.VideoCapture(1)
 
     if vc.isOpened(): # try to get the first frame
         rval, board_img = vc.read()
@@ -35,19 +35,19 @@ def gui_loop():
         if corners is None:
             try:
                 corners = find_corners(board_img)
+                print("Corners found!")
             except Exception as e:
                 print(e)
         else:
-            print("Corners found!")
             squares = get_board_squares(np.array(board_img), corners)
 
             # Train / load pre-trained data
             pieces, labels = recognise_pieces(squares) # predict(squares)
 
             # Create board representation from camera input
-            board = get_board() #(pieces)
+            board_pieces = get_board(pieces)
 
-            board_svg, move = parse_board(board)
+            board_svg, move = parse_board(board_pieces)
             if move is not None:
                 board_png = svg_to_img(board_svg)
                 my_gui.make_move(board_png, move)
@@ -65,7 +65,7 @@ def main():
     gui_loop()
 
     # cv2.namedWindow("preview")
-    # vc = cv2.VideoCapture(0)
+    # vc = cv2.VideoCapture(1)
     #
     # if vc.isOpened(): # try to get the first frame
     #     rval, frame = vc.read()
