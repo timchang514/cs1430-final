@@ -3,9 +3,11 @@ from render_board import *
 from parse_board import *
 from tkinter import Tk
 from threading import Thread, Lock
+from piece_recognition import *
 from gui import *
 import cv2
 import numpy as np
+
 
 def gui_loop():
     root = Tk()
@@ -38,10 +40,9 @@ def gui_loop():
         else:
             print("Corners found!")
             squares = get_board_squares(np.array(board_img), corners)
-            break;
 
             # Train / load pre-trained data
-            pieces = None # predict(squares)
+            pieces, labels = recognise_pieces(squares) # predict(squares)
 
             # Create board representation from camera input
             board = get_board() #(pieces)
